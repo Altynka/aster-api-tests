@@ -1,0 +1,16 @@
+{
+	"id": "a938d4bd-7955-4058-ae21-b1dac5044ad5",
+	"name": "Aster Production",
+	"values": [
+		{
+			"key": "base_url",
+			"value": "https://aster.kz",
+			"type": "default",
+			"enabled": true
+		}
+	],
+	"color": null,
+	"_postman_variable_scope": "environment",
+	"_postman_exported_at": "2026-06-04T09:28:49.085Z",
+	"_postman_exported_using": "Postman/12.13.5"
+}

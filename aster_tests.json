@@ -1,0 +1,371 @@
+{
+  "info": {
+    "_postman_id": "51a69e8e-5cab-4e72-b3cf-33719053207f",
+    "name": "Aster.kzTests",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "31178377"
+  },
+  "item": [
+    {
+      "name": "Aster countByFilter",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Response is number\", function () {\r",
+              "    const count = parseInt(pm.response.text());\r",
+              "    pm.expect(isNaN(count)).to.be.false;\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Count is greater than 0\", function () {\r",
+              "    const count = parseInt(pm.response.text());\r",
+              "    pm.expect(count).to.be.above(0);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Response is quicker than 3 sec\", function () {\r",
+              "    pm.expect(pm.response.responseTime).to.be.below(3000);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          },
+          {
+            "key": "Origin",
+            "value": "https://aster.kz",
+            "type": "text"
+          },
+          {
+            "key": "Referer",
+            "value": "https://aster.kz",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"creditFilter\": false,\r\n    \"carPathType\": null,\r\n    \"catalog_filter\": [\"\"],\r\n    \"yearFrom\": null,\r\n    \"yearTo\": null,\r\n    \"priceFrom\": null,\r\n    \"priceTo\": null,\r\n    \"mileageFrom\": null,\r\n    \"mileageTo\": null,\r\n    \"city\": null,\r\n    \"customClear\": false,\r\n    \"promo\": false,\r\n    \"bonus\": false,\r\n    \"underMarketPrice\": false,\r\n    \"credit44\": false,\r\n    \"nauryz\": false\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/rest/ads/countByFilter",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "rest",
+            "ads",
+            "countByFilter"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "AsterMarks",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "const marks = pm.response.json();\r",
+              "\r",
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Marks are not empty\", function () {\r",
+              "    pm.expect\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Structure of marks are correct\", function () {\r",
+              "    const first = marks[0];\r",
+              "    pm.expect(first).to.have.property(\"id\");\r",
+              "    pm.expect(first).to.have.property(\"name\");\r",
+              "    pm.expect(first).to.have.property(\"code\");\r",
+              "    pm.expect(first).to.have.property(\"popular\");\r",
+              "    pm.expect(first).to.have.property(\"logo\");\r",
+              "    pm.expect(first).to.have.property(\"inCyrillic\");\r",
+              "\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Types of data are correct\", function () {\r",
+              "    const first = marks[0];\r",
+              "    pm.expect(first.id).to.be.a(\"number\");\r",
+              "    pm.expect(first.name).to.be.a(\"string\");\r",
+              "    pm.expect(first.popular).to.be.a(\"boolean\"); \r",
+              "});\r",
+              "\r",
+              "pm.test(\"Toyota is in the list\", function () {\r",
+              "    const toyota = marks.find(mark => mark.name === \"Toyota\");\r",
+              "    pm.expect(toyota).to.not.be.undefined;\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Response is quicker than 3 sec\", function () {\r",
+              "    pm.expect(pm.response.responseTime).to.be.below(3000);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Origin",
+            "value": "https://aster.kz",
+            "type": "text"
+          },
+          {
+            "key": "Referer",
+            "value": "https://aster.kz",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "{{base_url}}/dict/marks/v2",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "dict",
+            "marks",
+            "v2"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "{{base_url}}/rest/call/autodamu",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "const res = pm.response.json();\r",
+              "\r",
+              "// Тест 1 — сервер отвечает 400 без капчи\r",
+              "pm.test(\"Без капчи сервер возвращает 400\", function () {\r",
+              "    pm.response.to.have.status(400);\r",
+              "});\r",
+              "\r",
+              "// Тест 2 — структура ответа есть\r",
+              "pm.test(\"Ответ содержит поле msg\", function () {\r",
+              "    pm.expect(res).to.have.property(\"msg\");\r",
+              "});\r",
+              "\r",
+              "// Тест 3 — сообщение об ошибке капчи\r",
+              "pm.test(\"Сообщение об ошибке reCAPTCHA\", function () {\r",
+              "    pm.expect(res.msg).to.equal(\"Неверный reCAPTCHA\");\r",
+              "});\r",
+              "\r",
+              "// Тест 4 — время ответа\r",
+              "pm.test(\"Ответ быстрее 3 секунд\", function () {\r",
+              "    pm.expect(pm.response.responseTime).to.be.below(3000);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"firstName\": \"Test\",\r\n    \"lastName\": \"\",\r\n    \"phoneNumber\": \"+7 (700) 000-00-00\",\r\n    \"city\": \"Алматы\",\r\n    \"mlResult\": null,\r\n    \"mlRequest\": null,\r\n    \"recaptchaResponse\": \"\",\r\n    \"marka\": \"\",\r\n    \"model\": \"\",\r\n    \"year\": null,\r\n    \"source\": \"autodamu\",\r\n    \"subject\": \"Получить консультацию\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/rest/call/autodamu",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "rest",
+            "call",
+            "autodamu"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "No ads ",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "// 404 — объявление не найдено\r",
+              "pm.test(\"Несуществующее объявление возвращает 404\", function () {\r",
+              "    pm.response.to.have.status(404);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Ответ быстрее 3 секунд\", function () {\r",
+              "    pm.expect(pm.response.responseTime).to.be.below(3000);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/rest/ads/99999999",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "rest",
+            "ads",
+            "99999999"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "No marks",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Несуществующий ресурс возвращает 404\", function () {\r",
+              "    pm.response.to.have.status(404);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Ответ быстрее 3 секунд\", function () {\r",
+              "    pm.expect(pm.response.responseTime).to.be.below(3000);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/dict/marks/v2/НЕСУЩЕСТВУЮЩАЯ",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "dict",
+            "marks",
+            "v2",
+            "НЕСУЩЕСТВУЮЩАЯ"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Not correct data",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "// Документируем что сервер падает с 500 на неверных данных\r",
+              "pm.test(\"БАГ: Сервер падает с 500 на неверных данных\", function () {\r",
+              "    pm.response.to.have.status(500);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Сервер должен возвращать 400 вместо 500\", function () {\r",
+              "    pm.expect(pm.response.code).to.not.equal(500); // этот тест будет FAILED пока баг не исправят\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Ответ быстрее 3 секунд\", function () {\r",
+              "    pm.expect(pm.response.responseTime).to.be.below(3000);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json",
+            "type": "text",
+            "disabled": true
+          },
+          {
+            "key": "Origin",
+            "value": "https://aster.kz",
+            "type": "text",
+            "disabled": true
+          },
+          {
+            "key": "Referer",
+            "value": "https://aster.kz",
+            "type": "text",
+            "disabled": true
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"yearFrom\": \"no number\",\r\n    \"priceFrom\": \"abcds\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/rest/ads/countByFilter",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "rest",
+            "ads",
+            "countByFilter"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
