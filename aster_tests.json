@@ -124,6 +124,11 @@
               "   pm.expect(gac).to.not.be.undefined; \r",
               "});\r",
               "\r",
+              "pm.test(\"LADA (ВАЗ) is on the list\", function () {\r",
+              "   const lada = marks.find(mark => mark.name === \"LADA (ВАЗ)\");\r",
+              "   pm.expect(lada).to.not.be.undefined;\r",
+              "});\r",
+              "\r",
               "pm.test(\"Response is quicker than 3 sec\", function () {\r",
               "    pm.expect(pm.response.responseTime).to.be.below(3000);\r",
               "});"
